@@ -1,5 +1,6 @@
 const readline = require("readline")
 const Player = require("./player")
+const Deck = require("./deck")
 
 class Game {
     constructor() {
@@ -28,6 +29,7 @@ class Game {
                         this.matchingCondition = response
                         this.playerOne = new Player(playerOne)
                         this.playerTwo = new Player(playerTwo)
+                        this.playGame()
                         rl.close()
                     })
                 })
@@ -36,6 +38,19 @@ class Game {
         rl.on("close", function () {
             process.exit(0);
         });
+    }
+
+    playGame() {
+        this.createGameDeck()
+        console.log(this.gameDeck.length)
+    }
+
+    createGameDeck() {
+        for (let i = 0; i < this.decks; ++i) {
+            const deck = new Deck
+            deck.shuffle()
+            this.gameDeck = [...this.gameDeck, ...deck.cards]
+        };
     }
 }
 
