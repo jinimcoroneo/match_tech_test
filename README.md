@@ -10,3 +10,5 @@
 - follow the prompts and enter number of decks, matching condition and player's names
 - Have fun!
 
+## To run tests:
+- run `npm run jest` from the root directory
