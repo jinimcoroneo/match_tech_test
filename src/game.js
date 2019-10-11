@@ -42,7 +42,7 @@ class Game {
 
     playGame() {
         this.createGameDeck()
-        console.log(this.gameDeck.length)
+        this.playCards()
     }
 
     createGameDeck() {
@@ -51,6 +51,46 @@ class Game {
             deck.shuffle()
             this.gameDeck = [...this.gameDeck, ...deck.cards]
         };
+    }
+
+    playCards() {
+        while (this.gameDeck.length > 0) {
+            const cardOne = this.gameDeck.pop()
+            const cardTwo = this.gameDeck.pop()
+            this.checkForMatch(cardOne, cardTwo)
+        }
+    }
+
+    checkForMatch(cardOne, cardTwo) {
+        this.playedCards = [...this.playedCards, cardOne, cardTwo]
+        switch (this.matchingCondition) {
+            case 'a': // Face value
+                if (cardOne.value === cardTwo.value) {
+                    this.giveCardsToPlayer(this.playedCards)
+                }
+                break;
+            case 'b': // Suit
+                if (cardOne.suit === cardTwo.suit) {
+                    this.giveCardsToPlayer(this.playedCards)
+                }
+                break;
+
+            default: // Both (using default implies correct construction of the decks)
+                if (cardOne.suit === cardTwo.suit && cardOne.value === cardTwo.value) {
+                    this.giveCardsToPlayer(this.playedCards)
+                }
+        }
+    }
+
+    giveCardsToPlayer(cards) {
+        const winner = this.chooseRandomPlayer()
+        console.log(`${winner.name} says Match!`)
+        winner.collect(cards)
+        this.playedCards = []
+    }
+
+    chooseRandomPlayer() {
+        return Math.random() < 0.5 ? this.playerOne : this.playerTwo;
     }
 }
 
