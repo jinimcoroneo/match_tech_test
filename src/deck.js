@@ -16,6 +16,10 @@ class Deck {
     get cards() {
         return this._cards
     }
+
+    shuffle() {
+        this._cards.sort(() => Math.random() < 0.5 ? -1 : 1)
+    }
 }
 
 module.exports = Deck
