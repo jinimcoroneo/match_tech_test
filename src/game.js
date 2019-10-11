@@ -34,6 +34,7 @@ class Game {
                         this.playerOne = new Player(playerOne)
                         this.playerTwo = new Player(playerTwo)
                         this.playGame()
+                        this.declareWinner()
                         rl.close()
                     })
                 })
@@ -96,6 +97,16 @@ class Game {
 
     chooseRandomPlayer() {
         return Math.random() < 0.5 ? this.playerOne : this.playerTwo;
+    }
+
+    declareWinner() {
+        if (this.playerOne.numCards > this.playerTwo.numCards) {
+            console.log("\n", `${this.playerOne.name} wins with ${this.playerOne.numCards} cards!`)
+        } else if (this.playerTwo.numCards > this.playerOne.numCards) {
+            console.log("\n", `${this.playerTwo.name} wins with ${this.playerTwo.numCards} cards!`)
+        } else {
+            console.log("\n", "Nobody wins, it was a draw!")
+        }
     }
 }
 
