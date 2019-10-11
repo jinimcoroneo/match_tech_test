@@ -11,14 +11,18 @@ class Game {
             output: process.stdout
         });
 
-        rl.question("How many packs of cards would you like to use? ", _numDecks => {
+        rl.question("How many packs of cards? ", _numDecks => {
             const numDecks = parseInt(_numDecks)
             if (!Number.isInteger(numDecks)) {
                 console.log("You must enter an integer, please try again")
                 return rl.close()
             }
-
-            rl.question(`Match on: a) face value, b) suit${numDecks === 1 ? ' ' : ', c) both '}`, response => {
+            const nextQuestion = numDecks === 1 ? "Match on: a) face value, b) suit: " : "Match on: a) face value, b) suit, c) both: "
+            rl.question(nextQuestion, response => {
+                if (numDecks === 1 && !['a', 'b'].includes(response)) {
+                    console.log("You must choose a or b, please try again")
+                    return rl.close()
+                }
                 if (!['a', 'b', 'c'].includes(response)) {
                     console.log("You must choose a, b, or c, please try again")
                     return rl.close()
@@ -63,6 +67,7 @@ class Game {
 
     checkForMatch(cardOne, cardTwo) {
         this.playedCards = [...this.playedCards, cardOne, cardTwo]
+        console.log(`${cardOne.value} of ${cardOne.suit} and ${cardTwo.value} of ${cardTwo.suit}`)
         switch (this.matchingCondition) {
             case 'a': // Face value
                 if (cardOne.value === cardTwo.value) {
@@ -84,7 +89,7 @@ class Game {
 
     giveCardsToPlayer(cards) {
         const winner = this.chooseRandomPlayer()
-        console.log(`${winner.name} says Match!`)
+        console.log("\n", `${winner.name} says Match!`)
         winner.collect(cards)
         this.playedCards = []
     }

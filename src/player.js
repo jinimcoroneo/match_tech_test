@@ -9,7 +9,7 @@ class Player {
     }
 
     collect(cards) {
-        console.log(`${this.name} receives ${cards.length} cards`)
+        console.log(`${this.name} receives ${cards.length} cards`, "\n")
         this._cards = [...this._cards, ...cards]
     }
 }
